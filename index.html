@@ -1,0 +1,104 @@
+<!-- <!DOCTYPE html>
+<html>
+  <head>
+    <title>Send text to Python</title>
+  </head>
+  <body>
+    <h1>Enter some text:</h1>
+    <form action="/submit" method="post">
+      <textarea name="text"></textarea>
+      <br>
+      <input type="submit" value="Submit">
+    </form>
+  </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Classification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        label {
+            display: block;
+            margin: 1em 0;
+        }
+        .slider-container {
+            display: flex;
+            align-items: center;
+        }
+        .slider {
+            margin-left: 1em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Text Classification</h1>
+    <form id="classification-form">
+        <label for="text">Enter text:</label>
+        <textarea id="text" name="text" rows="5" cols="50"></textarea>
+        <button type="submit">Submit</button>
+    </form>
+
+    <div id="results">
+        <!-- Sliders will be added here -->
+    </div>
+
+    <script>
+      document.getElementById('classification-form').addEventListener('submit', async (event) => {
+          event.preventDefault();
+          const text = document.getElementById('text').value;
+          const response = await fetch('/submit', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+              },
+              body: new URLSearchParams(new FormData(event.target))
+          });
+          const probabilities = await response.json();
+          updateSliders(probabilities);
+      });
+
+      function updateSliders(probabilities) { 
+            const resultsContainer = document.getElementById('results'); 
+            resultsContainer.innerHTML = ''; 
+            
+            const maxValues = {}; 
+            
+            for (const prob of probabilities) { 
+                resultsContainer.innerHTML = '';  
+                
+                for (const label in prob) { 
+                const value = prob[label]; 
+                
+                maxValues[label] = Math.max(maxValues[label] || 0, value); 
+                
+                const sliderContainer = document.createElement('div'); 
+                sliderContainer.className = 'slider-container'; 
+                const sliderLabel = document.createElement('label'); 
+                sliderLabel.textContent = `${label}: ${maxValues[label]}`; 
+                sliderContainer.appendChild(sliderLabel);  
+
+                const slider = document.createElement('input');
+                slider.type = 'range';
+                slider.className = 'slider';
+                slider.min = 0;
+                slider.max = 1;
+                slider.step = 1 / 5;
+                slider.value = value;
+                slider.readOnly = true;
+                sliderContainer.appendChild(slider);
+
+                resultsContainer.appendChild(sliderContainer);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
