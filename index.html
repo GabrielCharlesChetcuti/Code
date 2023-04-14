@@ -1,104 +1,557 @@
 <!-- <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Send text to Python</title>
-  </head>
-  <body>
-    <h1>Enter some text:</h1>
-    <form action="/submit" method="post">
-      <textarea name="text"></textarea>
-      <br>
-      <input type="submit" value="Submit">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Text Classification</title>
+    <style> -->
+      <!-- /* .slider-container {
+            display: flex;
+            align-items: center;
+        } */
+      /* body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      label {
+        display: block;
+        margin: 1em 0;
+      }
+
+      .slider-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1em;
+      }
+
+      .slider {
+        margin-left: 1em;
+      }
+
+      .question-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1em;
+      }
+
+      .question-label {
+        font-weight: bold;
+        margin-right: 1em;
+      }
+
+      .answer-container {
+        display: flex;
+        align-items: center;
+        margin-right: 1em;
+      }
+
+      .answer-label {
+        margin-right: 0.5em;
+      }
+
+      .answer-value {
+        font-weight: bold;
+      } */ -->
+    <!-- </style> -->
+  <!-- </head> -->
+  <!-- <body>
+    <h1>Text Classification</h1>
+    <form id="classification-form">
+      <label for="text">Enter text:</label>
+      <textarea id="text" name="text" rows="5" cols="50"></textarea>
+      <button type="submit">Submit</button>
+    </form> -->
+
+    <!-- <form id="text-form">
+      <textarea id="text-input" placeholder="Enter your text here..."></textarea>
+      <button id="submit-button" type="submit">Submit</button>
     </form>
-  </body>
+    <div id="results-container"></div>
+     -->
+
+    <!-- <div id="results">
+      Results will be added here
+    </div>  -->
+
+    <!-- <div id="content"></div> -->
+
+    <!-- <script> -->
+      <!-- // document.getElementById('classification-form').addEventListener('submit', async (event) => {
+      //     event.preventDefault();
+      //     const text = event.target.elements.text.value;
+      //     const response = await fetch('/submit', {
+      //         method: 'POST',
+      //         headers: {
+      //             'Content-Type': 'application/x-www-form-urlencoded'
+      //         },
+      //         body: new URLSearchParams(new FormData(event.target))
+      //     });
+      //     const probabilities = await response.json();
+      //     const { probabilities } = await response.json();
+      //     updateSliders(probabilities);
+      // });
+
+//       function updateSliders(probabilities) {
+//         const resultsContainer = document.getElementById('results');
+//         resultsContainer.innerHTML = '';
+
+//         const maxValues = {};
+
+//         if (!Array.isArray(probabilities)) {
+//           console.error('Probabilities is not an array:', probabilities);
+//           return;
+//         }
+
+//         for (const prob of probabilities) {
+//           for (const label in prob) {
+//             const value = prob[label];
+
+//             maxValues[label] = Math.max(maxValues[label] || 0, value);
+
+//             const sliderContainer = document.createElement('div');
+//             sliderContainer.className = 'slider-container';
+//             const sliderLabel = document.createElement('label');
+//             sliderLabel.textContent = `${label}: ${maxValues[label]}`;
+//             sliderContainer.appendChild(sliderLabel);
+
+//             const slider = document.createElement('input');
+//             slider.type = 'range';
+//             slider.className = 'slider';
+//             slider.min = 0;
+//             slider.max = 1;
+//             slider.step = 1 / 5
+//             slider.value = value;
+//             slider.readOnly = true;
+//             sliderContainer.appendChild(slider);
+
+//             resultsContainer.appendChild(sliderContainer);
+//     }
+//   }
+// }
+    //     const data = {
+    //         "probabilities": [{"Development Team":0.4,"Requirements":0.2,"Risk":0.2,"User Participation":0.2}],
+    //         "results": [{"answers":["No","No","No","No","No","No"],"label":"Risk"},{"answers":["No","No","No","No"],"label":"Development Team"},{"answers":["No","No","No","No"],"label":"Requirements"},{"answers":["No","No","No","No"],"label":"User Participation"}]
+    //     };
+
+    //     const questions = {
+    //         "Development Team": ["The team has experience on similar projects?", "Is the team knowledgeable about the domain of the project?", "The team has experience with the tools used for the project?", "There is training available for the team?"],
+    //         "Requirements": ["Easy to understandable and defined requirements?", "Requirements are changed quite often?", "Requirements are defined early in the cycle?", "Is the system complex due to the requirements?"],
+    //         "Risk": ["The project is the improvement of an old system?", "The requirements are highly reliable?", "Is there stable funding for the project?", "Is the schedule of the project tight?", "Can reusable components be used?", "Are there scarce resources for the project?"],
+    //         "User Participation": ["The users participate in all the phases?", "Is there limited user participation?", "Does the user have any experience on similar projects?", "Are the users experts of the problem domain?"],
+    //     };
+
+    //     function displayData(data) {
+    //         const content = document.getElementById("content");
+
+    //         // Display sliders
+    //         for (const key in data.probabilities[0]) {
+    //             const sliderContainer = document.createElement("div");
+    //             sliderContainer.className = "slider-container";
+                
+    //             const label = document.createElement("label");
+    //             label.textContent = key + ": ";
+    //             sliderContainer.appendChild(label);
+
+    //             const slider = document.createElement("input");
+    //             slider.type = "range";
+    //             slider.min = 0;
+    //             slider.max = 1;
+    //             slider.step = 0.01;
+    //             slider.value = data.probabilities[0][key];
+    //             sliderContainer.appendChild(slider);
+
+    //             content.appendChild(sliderContainer);
+    //         }
+
+    //         // Display questions and answers
+    //         for (const result of data.results) {
+    //             const category = document.createElement("h3");
+    //             category.textContent = result.label;
+    //             content.appendChild(category);
+
+    //             const ul = document.createElement("ul");
+    //             content.appendChild(ul);
+
+    //             for (let i = 0; i < questions[result.label].length; i++) {
+    //                 const li = document.createElement("li");
+    //                 li.textContent = questions[result.label][i] + " - " + result.answers[i];
+    //                 ul.appendChild(li);
+    //             }
+    //         }
+    //     }
+
+    //     displayData(data);
+    // </script> -->
+<!--  
+    <script>
+      const form = document.getElementById('text-form');
+      const textInput = document.getElementById('text-input');
+      const submitButton = document.getElementById('submit-button');
+      const resultsContainer = document.getElementById('results-container');
+      
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const text = textInput.value.trim();
+        if (text === '') {
+          alert('Please enter some text.');
+          return;
+        }
+        submitButton.disabled = true;
+        resultsContainer.innerHTML = 'Loading...';
+        fetch('/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: JSON.stringify({
+            text: text
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          const probabilities = data.probabilities[0];
+          const results = data.results;
+          const html = `
+            <h2>Probabilities:</h2>
+            <ul>
+              <li>Risk: ${probabilities.Risk}</li>
+              <li>Development Team: ${probabilities['Development Team']}</li>
+              <li>Requirements: ${probabilities.Requirements}</li>
+              <li>User Participation: ${probabilities['User Participation']}</li>
+            </ul>
+            <h2>Label-Specific Questions and Answers:</h2>
+          `;
+          results.forEach(result => {
+            const label = result.label;
+            const answers = result.answers;
+            html += `
+              <h3>${label}:</h3>
+              <ul>
+                ${answers.map(answer => `<li>${answer}</li>`).join('')}
+              </ul>
+            `;
+          });
+          resultsContainer.innerHTML = html;
+          submitButton.disabled = false;
+        })
+        .catch(error => {
+          console.error(error);
+          resultsContainer.innerHTML = 'An error occurred. Please try again.';
+          submitButton.disabled = false;
+        });
+      });
+    </script> --> 
+    
+<!-- </body>
 </html> -->
+
+
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text Classification</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        label {
-            display: block;
-            margin: 1em 0;
-        }
-        .slider-container {
-            display: flex;
-            align-items: center;
-        }
-        .slider {
-            margin-left: 1em;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Display Data</title>
+  <style>
+    .slider-container {
+      display: flex;
+      align-items: center;
+    }
+    .question {
+      cursor: pointer;
+    }
+    .selected {
+  background-color: blue;
+  color: white;
+}
+  </style>
 </head>
 <body>
-    <h1>Text Classification</h1>
-    <form id="classification-form">
-        <label for="text">Enter text:</label>
-        <textarea id="text" name="text" rows="5" cols="50"></textarea>
-        <button type="submit">Submit</button>
-    </form>
-
-    <div id="results">
-        <!-- Sliders will be added here -->
-    </div>
-
-    <script>
-      document.getElementById('classification-form').addEventListener('submit', async (event) => {
-          event.preventDefault();
-          const text = document.getElementById('text').value;
-          const response = await fetch('/submit', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/x-www-form-urlencoded'
-              },
-              body: new URLSearchParams(new FormData(event.target))
-          });
-          const probabilities = await response.json();
-          updateSliders(probabilities);
+  <form id="classification-form">
+    <input type="text" name="text" placeholder="Enter text">
+    <button type="submit">Submit</button>
+  </form>
+  <div id="content"></div>
+  <script>
+    async function fetchData() {
+      const response = await fetch('/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: new URLSearchParams(new FormData(document.getElementById('classification-form')))
       });
+      return await response.json();
+    }
 
-      function updateSliders(probabilities) { 
-            const resultsContainer = document.getElementById('results'); 
-            resultsContainer.innerHTML = ''; 
-            
-            const maxValues = {}; 
-            
-            for (const prob of probabilities) { 
-                resultsContainer.innerHTML = '';  
-                
-                for (const label in prob) { 
-                const value = prob[label]; 
-                
-                maxValues[label] = Math.max(maxValues[label] || 0, value); 
-                
-                const sliderContainer = document.createElement('div'); 
-                sliderContainer.className = 'slider-container'; 
-                const sliderLabel = document.createElement('label'); 
-                sliderLabel.textContent = `${label}: ${maxValues[label]}`; 
-                sliderContainer.appendChild(sliderLabel);  
+//     function updateSliders(data) {
+//       console.log(data)
+//       const content = document.getElementById("content");
+//       content.innerHTML = '';
 
-                const slider = document.createElement('input');
-                slider.type = 'range';
-                slider.className = 'slider';
-                slider.min = 0;
-                slider.max = 1;
-                slider.step = 1 / 5;
-                slider.value = value;
-                slider.readOnly = true;
-                sliderContainer.appendChild(slider);
+//       // Display sliders
+//       for (const key in data.probabilities[0]) {
+//         const sliderContainer = document.createElement("div");
+//         sliderContainer.className = "slider-container";
 
-                resultsContainer.appendChild(sliderContainer);
-                }
-            }
+//         const label = document.createElement("label");
+//         label.textContent = key + ": ";
+//         sliderContainer.appendChild(label);
+
+//         const slider = document.createElement("input");
+//         slider.type = "range";
+//         slider.min = 0;
+//         slider.max = 1;
+//         slider.step = 0.05;
+//         slider.value = data.probabilities[0][key];
+//         sliderContainer.appendChild(slider);
+
+//         content.appendChild(sliderContainer);
+//       }
+
+//       // Check if data.results exists before accessing it
+//       if (data.results) {
+//         // Display questions and answers
+//         // Display questions and answers
+// for (const result of data.results) {
+//   const category = document.createElement("h3");
+//   category.textContent = result.label;
+//   content.appendChild(category);
+
+//   const ul = document.createElement("ul");
+//   content.appendChild(ul);
+
+//   // Check if result.answers exists before accessing its length property
+//         if (result.answers) {
+//           for (let i = 0; i < result.answers.length; i++) {
+//             const li = document.createElement("li");
+
+//             const yes = document.createElement("span");
+//             yes.className = "question";
+//             yes.textContent = "Yes";
+//             yes.onclick = () => updateAnswer(result.label, i, "Yes", data);
+//             li.appendChild(yes);
+
+//             li.appendChild(document.createTextNode(" / "));
+
+//             const no = document.createElement("span");
+//             no.className = "question";
+//             no.textContent = "No";
+//             no.onclick = () => updateAnswer(result.label, i, "No", data);
+//             li.appendChild(no);
+
+//             li.appendChild(document.createTextNode(" - " + result.answers[i]));
+
+//             ul.appendChild(li);
+//           }
+//         }
+//       }
+//     }
+//   }
+
+// THIS IS THE CODE FOR THE BUTTONS, WITHOUT THE HIGHLIGTING
+// function updateSliders(data) {
+//   const content = document.getElementById("content");
+//   content.innerHTML = "";
+
+//   // Define the questions object
+//   const questions = {
+//     "Development Team": [
+//       "The team has experience on similar projects?",
+//      "Is the team knowledgeable about the domain of the project?",
+//       "The team has experience with the tools used for the project?",
+//       "There is training available for the team?"
+//     ],
+//     "Requirements": [
+//       "Easy to understandable and defined requirements?",
+//       "Requirements are changed quite often?",
+//       "Requirements are defined early in the cycle?",
+//       "Is the system complex due to the requirements?"
+//     ],
+//     "Risk": [
+//       "The project is the improvement of an old system?",
+//       "The requirements are highly reliable?",
+//       "Is there stable funding for the project?",
+//       "Is the schedule of the project tight?",
+//       "Can reusable components be used?",
+//       "Are there scarce resources for the project?"
+//     ],
+//     "User Participation": [
+//       "The users participate in all the phases?",
+//       "Is there limited user participation?",
+//       "Does the user have any experience on similar projects?",
+//       "Are the users experts of the problem domain?"
+//     ],
+//     // Add questions for the other labels here
+//   };
+
+//   // Display questions and answers
+//   for (const result of data.results) {
+//     const category = document.createElement("h3");
+//     category.textContent = result.label;
+//     content.appendChild(category);
+
+//     const ul = document.createElement("ul");
+//     content.appendChild(ul);
+
+//     if (result.answers) {
+//       for (let i = 0; i < result.answers.length; i++) {
+//         const li = document.createElement("li");
+//         ul.appendChild(li);
+
+//         // Display the question
+//         const question = document.createElement("span");
+//         question.textContent = questions[result.label][i] + " ";
+//         li.appendChild(question);
+
+//         const yes = document.createElement("button");
+//         yes.textContent = "Yes";
+//         li.appendChild(yes);
+//         yes.onclick = function () {
+//           updateAnswer(i, "Yes", data);
+//         };
+
+//         const no = document.createElement("button");
+//         no.textContent = "No";
+//         li.appendChild(no);
+//         no.onclick = function () {
+//           updateAnswer(i, "No", data);
+//         };
+//       }
+//     }
+//   }
+// }
+
+function updateSliders(data) {
+  const content = document.getElementById("content");
+  content.innerHTML = "";
+
+  // Define the questions object
+  const questions = {
+    "Development Team": [
+      "The team has experience on similar projects?",
+     "Is the team knowledgeable about the domain of the project?",
+      "The team has experience with the tools used for the project?",
+      "There is training available for the team?"
+    ],
+    "Requirements": [
+      "Easy to understandable and defined requirements?",
+      "Requirements are changed quite often?",
+      "Requirements are defined early in the cycle?",
+      "Is the system complex due to the requirements?"
+    ],
+    "Risk": [
+      "The project is the improvement of an old system?",
+      "The requirements are highly reliable?",
+      "Is there stable funding for the project?",
+      "Is the schedule of the project tight?",
+      "Can reusable components be used?",
+      "Are there scarce resources for the project?"
+    ],
+    "User Participation": [
+      "The users participate in all the phases?",
+      "Is there limited user participation?",
+      "Does the user have any experience on similar projects?",
+      "Are the users experts of the problem domain?"
+    ],
+    // Add questions for the other labels here
+  };
+
+  // Display questions and answers
+  for (const result of data.results) {
+    const category = document.createElement("h3");
+    category.textContent = result.label;
+    content.appendChild(category);
+
+    const ul = document.createElement("ul");
+    content.appendChild(ul);
+
+    if (result.answers) {
+      for (let i = 0; i < result.answers.length; i++) {
+        const li = document.createElement("li");
+        ul.appendChild(li);
+
+        // Display the question
+        const question = document.createElement("span");
+        question.textContent = questions[result.label][i] + " ";
+        li.appendChild(question);
+
+        const yes = document.createElement("button");
+        yes.textContent = "Yes";
+        li.appendChild(yes);
+
+        const no = document.createElement("button");
+        no.textContent = "No";
+        li.appendChild(no);
+
+        // Select the answer button based on the value in the data object
+        if (result.answers[i] === "Yes") {
+          yes.classList.add("selected");
+        } else if (result.answers[i] === "No") {
+          no.classList.add("selected");
         }
-    </script>
+
+        // Add click event listeners to the buttons
+        yes.addEventListener("click", function () {
+          updateAnswer(result.label, i, "Yes", data);
+          // Highlight the selected button
+          yes.classList.add("selected");
+          no.classList.remove("selected");
+        });
+
+        no.addEventListener("click", function () {
+          updateAnswer(result.label, i, "No", data);
+          // Highlight the selected button
+          no.classList.add("selected");
+          yes.classList.remove("selected");
+        });
+      }
+    }
+  }
+
+
+  // Add a submit button to create a new version of 'data'
+  const newSubmitButton = document.createElement("button");
+    newSubmitButton.textContent = "New Submit";
+    content.appendChild(newSubmitButton);
+    newSubmitButton.onclick = function () {
+        const newData = JSON.stringify(data);
+        fetch('/second_submit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: newData
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle the response data as needed
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+};
+
+}
+
+
+    function updateAnswer(category, index, answer, data) {
+      // Update the answer in the data object
+      const result = data.results.find(result => result.label === category);
+      result.answers[index] = answer;
+
+      // Redisplay the sliders and questions
+      updateSliders(data);
+    }
+
+    document.getElementById('classification-form').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const data = await fetchData();
+      updateSliders(data);
+    });
+  </script>
 </body>
 </html>
