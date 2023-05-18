@@ -1,557 +1,1049 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Text Classification</title>
-    <style> -->
-      <!-- /* .slider-container {
-            display: flex;
-            align-items: center;
-        } */
-      /* body {
-        font-family: Arial, sans-serif;
-        max-width: 800px;
-        margin: 0 auto;
-      }
-
-      label {
-        display: block;
-        margin: 1em 0;
-      }
-
-      .slider-container {
-        display: flex;
-        align-items: center;
-        margin-bottom: 1em;
-      }
-
-      .slider {
-        margin-left: 1em;
-      }
-
-      .question-container {
-        display: flex;
-        align-items: center;
-        margin-bottom: 1em;
-      }
-
-      .question-label {
-        font-weight: bold;
-        margin-right: 1em;
-      }
-
-      .answer-container {
-        display: flex;
-        align-items: center;
-        margin-right: 1em;
-      }
-
-      .answer-label {
-        margin-right: 0.5em;
-      }
-
-      .answer-value {
-        font-weight: bold;
-      } */ -->
-    <!-- </style> -->
-  <!-- </head> -->
-  <!-- <body>
-    <h1>Text Classification</h1>
-    <form id="classification-form">
-      <label for="text">Enter text:</label>
-      <textarea id="text" name="text" rows="5" cols="50"></textarea>
-      <button type="submit">Submit</button>
-    </form> -->
-
-    <!-- <form id="text-form">
-      <textarea id="text-input" placeholder="Enter your text here..."></textarea>
-      <button id="submit-button" type="submit">Submit</button>
-    </form>
-    <div id="results-container"></div>
-     -->
-
-    <!-- <div id="results">
-      Results will be added here
-    </div>  -->
-
-    <!-- <div id="content"></div> -->
-
-    <!-- <script> -->
-      <!-- // document.getElementById('classification-form').addEventListener('submit', async (event) => {
-      //     event.preventDefault();
-      //     const text = event.target.elements.text.value;
-      //     const response = await fetch('/submit', {
-      //         method: 'POST',
-      //         headers: {
-      //             'Content-Type': 'application/x-www-form-urlencoded'
-      //         },
-      //         body: new URLSearchParams(new FormData(event.target))
-      //     });
-      //     const probabilities = await response.json();
-      //     const { probabilities } = await response.json();
-      //     updateSliders(probabilities);
-      // });
-
-//       function updateSliders(probabilities) {
-//         const resultsContainer = document.getElementById('results');
-//         resultsContainer.innerHTML = '';
-
-//         const maxValues = {};
-
-//         if (!Array.isArray(probabilities)) {
-//           console.error('Probabilities is not an array:', probabilities);
-//           return;
-//         }
-
-//         for (const prob of probabilities) {
-//           for (const label in prob) {
-//             const value = prob[label];
-
-//             maxValues[label] = Math.max(maxValues[label] || 0, value);
-
-//             const sliderContainer = document.createElement('div');
-//             sliderContainer.className = 'slider-container';
-//             const sliderLabel = document.createElement('label');
-//             sliderLabel.textContent = `${label}: ${maxValues[label]}`;
-//             sliderContainer.appendChild(sliderLabel);
-
-//             const slider = document.createElement('input');
-//             slider.type = 'range';
-//             slider.className = 'slider';
-//             slider.min = 0;
-//             slider.max = 1;
-//             slider.step = 1 / 5
-//             slider.value = value;
-//             slider.readOnly = true;
-//             sliderContainer.appendChild(slider);
-
-//             resultsContainer.appendChild(sliderContainer);
-//     }
-//   }
-// }
-    //     const data = {
-    //         "probabilities": [{"Development Team":0.4,"Requirements":0.2,"Risk":0.2,"User Participation":0.2}],
-    //         "results": [{"answers":["No","No","No","No","No","No"],"label":"Risk"},{"answers":["No","No","No","No"],"label":"Development Team"},{"answers":["No","No","No","No"],"label":"Requirements"},{"answers":["No","No","No","No"],"label":"User Participation"}]
-    //     };
-
-    //     const questions = {
-    //         "Development Team": ["The team has experience on similar projects?", "Is the team knowledgeable about the domain of the project?", "The team has experience with the tools used for the project?", "There is training available for the team?"],
-    //         "Requirements": ["Easy to understandable and defined requirements?", "Requirements are changed quite often?", "Requirements are defined early in the cycle?", "Is the system complex due to the requirements?"],
-    //         "Risk": ["The project is the improvement of an old system?", "The requirements are highly reliable?", "Is there stable funding for the project?", "Is the schedule of the project tight?", "Can reusable components be used?", "Are there scarce resources for the project?"],
-    //         "User Participation": ["The users participate in all the phases?", "Is there limited user participation?", "Does the user have any experience on similar projects?", "Are the users experts of the problem domain?"],
-    //     };
-
-    //     function displayData(data) {
-    //         const content = document.getElementById("content");
-
-    //         // Display sliders
-    //         for (const key in data.probabilities[0]) {
-    //             const sliderContainer = document.createElement("div");
-    //             sliderContainer.className = "slider-container";
-                
-    //             const label = document.createElement("label");
-    //             label.textContent = key + ": ";
-    //             sliderContainer.appendChild(label);
-
-    //             const slider = document.createElement("input");
-    //             slider.type = "range";
-    //             slider.min = 0;
-    //             slider.max = 1;
-    //             slider.step = 0.01;
-    //             slider.value = data.probabilities[0][key];
-    //             sliderContainer.appendChild(slider);
-
-    //             content.appendChild(sliderContainer);
-    //         }
-
-    //         // Display questions and answers
-    //         for (const result of data.results) {
-    //             const category = document.createElement("h3");
-    //             category.textContent = result.label;
-    //             content.appendChild(category);
-
-    //             const ul = document.createElement("ul");
-    //             content.appendChild(ul);
-
-    //             for (let i = 0; i < questions[result.label].length; i++) {
-    //                 const li = document.createElement("li");
-    //                 li.textContent = questions[result.label][i] + " - " + result.answers[i];
-    //                 ul.appendChild(li);
-    //             }
-    //         }
-    //     }
-
-    //     displayData(data);
-    // </script> -->
-<!--  
-    <script>
-      const form = document.getElementById('text-form');
-      const textInput = document.getElementById('text-input');
-      const submitButton = document.getElementById('submit-button');
-      const resultsContainer = document.getElementById('results-container');
-      
-      form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const text = textInput.value.trim();
-        if (text === '') {
-          alert('Please enter some text.');
-          return;
-        }
-        submitButton.disabled = true;
-        resultsContainer.innerHTML = 'Loading...';
-        fetch('/submit', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          },
-          body: JSON.stringify({
-            text: text
-          })
-        })
-        .then(response => response.json())
-        .then(data => {
-          const probabilities = data.probabilities[0];
-          const results = data.results;
-          const html = `
-            <h2>Probabilities:</h2>
-            <ul>
-              <li>Risk: ${probabilities.Risk}</li>
-              <li>Development Team: ${probabilities['Development Team']}</li>
-              <li>Requirements: ${probabilities.Requirements}</li>
-              <li>User Participation: ${probabilities['User Participation']}</li>
-            </ul>
-            <h2>Label-Specific Questions and Answers:</h2>
-          `;
-          results.forEach(result => {
-            const label = result.label;
-            const answers = result.answers;
-            html += `
-              <h3>${label}:</h3>
-              <ul>
-                ${answers.map(answer => `<li>${answer}</li>`).join('')}
-              </ul>
-            `;
-          });
-          resultsContainer.innerHTML = html;
-          submitButton.disabled = false;
-        })
-        .catch(error => {
-          console.error(error);
-          resultsContainer.innerHTML = 'An error occurred. Please try again.';
-          submitButton.disabled = false;
-        });
-      });
-    </script> --> 
-    
-<!-- </body>
-</html> -->
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Display Data</title>
-  <style>
-    .slider-container {
-      display: flex;
-      align-items: center;
-    }
-    .question {
-      cursor: pointer;
-    }
-    .selected {
-  background-color: blue;
-  color: white;
-}
-  </style>
+  <title>SDLC Selection Tool</title>
+  <!-- <link rel="stylesheet" type="text/css" href="css/style.css"> -->
 </head>
 <body>
-  <form id="classification-form">
-    <input type="text" name="text" placeholder="Enter text">
-    <button type="submit">Submit</button>
-  </form>
-  <div id="content"></div>
-  <script>
-    async function fetchData() {
-      const response = await fetch('/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: new URLSearchParams(new FormData(document.getElementById('classification-form')))
-      });
-      return await response.json();
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      color: #34495e;
+      background-color: #ecf0f1;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
     }
 
-//     function updateSliders(data) {
-//       console.log(data)
-//       const content = document.getElementById("content");
-//       content.innerHTML = '';
-
-//       // Display sliders
-//       for (const key in data.probabilities[0]) {
-//         const sliderContainer = document.createElement("div");
-//         sliderContainer.className = "slider-container";
-
-//         const label = document.createElement("label");
-//         label.textContent = key + ": ";
-//         sliderContainer.appendChild(label);
-
-//         const slider = document.createElement("input");
-//         slider.type = "range";
-//         slider.min = 0;
-//         slider.max = 1;
-//         slider.step = 0.05;
-//         slider.value = data.probabilities[0][key];
-//         sliderContainer.appendChild(slider);
-
-//         content.appendChild(sliderContainer);
-//       }
-
-//       // Check if data.results exists before accessing it
-//       if (data.results) {
-//         // Display questions and answers
-//         // Display questions and answers
-// for (const result of data.results) {
-//   const category = document.createElement("h3");
-//   category.textContent = result.label;
-//   content.appendChild(category);
-
-//   const ul = document.createElement("ul");
-//   content.appendChild(ul);
-
-//   // Check if result.answers exists before accessing its length property
-//         if (result.answers) {
-//           for (let i = 0; i < result.answers.length; i++) {
-//             const li = document.createElement("li");
-
-//             const yes = document.createElement("span");
-//             yes.className = "question";
-//             yes.textContent = "Yes";
-//             yes.onclick = () => updateAnswer(result.label, i, "Yes", data);
-//             li.appendChild(yes);
-
-//             li.appendChild(document.createTextNode(" / "));
-
-//             const no = document.createElement("span");
-//             no.className = "question";
-//             no.textContent = "No";
-//             no.onclick = () => updateAnswer(result.label, i, "No", data);
-//             li.appendChild(no);
-
-//             li.appendChild(document.createTextNode(" - " + result.answers[i]));
-
-//             ul.appendChild(li);
-//           }
-//         }
-//       }
-//     }
-//   }
-
-// THIS IS THE CODE FOR THE BUTTONS, WITHOUT THE HIGHLIGTING
-// function updateSliders(data) {
-//   const content = document.getElementById("content");
-//   content.innerHTML = "";
-
-//   // Define the questions object
-//   const questions = {
-//     "Development Team": [
-//       "The team has experience on similar projects?",
-//      "Is the team knowledgeable about the domain of the project?",
-//       "The team has experience with the tools used for the project?",
-//       "There is training available for the team?"
-//     ],
-//     "Requirements": [
-//       "Easy to understandable and defined requirements?",
-//       "Requirements are changed quite often?",
-//       "Requirements are defined early in the cycle?",
-//       "Is the system complex due to the requirements?"
-//     ],
-//     "Risk": [
-//       "The project is the improvement of an old system?",
-//       "The requirements are highly reliable?",
-//       "Is there stable funding for the project?",
-//       "Is the schedule of the project tight?",
-//       "Can reusable components be used?",
-//       "Are there scarce resources for the project?"
-//     ],
-//     "User Participation": [
-//       "The users participate in all the phases?",
-//       "Is there limited user participation?",
-//       "Does the user have any experience on similar projects?",
-//       "Are the users experts of the problem domain?"
-//     ],
-//     // Add questions for the other labels here
-//   };
-
-//   // Display questions and answers
-//   for (const result of data.results) {
-//     const category = document.createElement("h3");
-//     category.textContent = result.label;
-//     content.appendChild(category);
-
-//     const ul = document.createElement("ul");
-//     content.appendChild(ul);
-
-//     if (result.answers) {
-//       for (let i = 0; i < result.answers.length; i++) {
-//         const li = document.createElement("li");
-//         ul.appendChild(li);
-
-//         // Display the question
-//         const question = document.createElement("span");
-//         question.textContent = questions[result.label][i] + " ";
-//         li.appendChild(question);
-
-//         const yes = document.createElement("button");
-//         yes.textContent = "Yes";
-//         li.appendChild(yes);
-//         yes.onclick = function () {
-//           updateAnswer(i, "Yes", data);
-//         };
-
-//         const no = document.createElement("button");
-//         no.textContent = "No";
-//         li.appendChild(no);
-//         no.onclick = function () {
-//           updateAnswer(i, "No", data);
-//         };
-//       }
-//     }
-//   }
-// }
-
-function updateSliders(data) {
-  const content = document.getElementById("content");
-  content.innerHTML = "";
-
-  // Define the questions object
-  const questions = {
-    "Development Team": [
-      "The team has experience on similar projects?",
-     "Is the team knowledgeable about the domain of the project?",
-      "The team has experience with the tools used for the project?",
-      "There is training available for the team?"
-    ],
-    "Requirements": [
-      "Easy to understandable and defined requirements?",
-      "Requirements are changed quite often?",
-      "Requirements are defined early in the cycle?",
-      "Is the system complex due to the requirements?"
-    ],
-    "Risk": [
-      "The project is the improvement of an old system?",
-      "The requirements are highly reliable?",
-      "Is there stable funding for the project?",
-      "Is the schedule of the project tight?",
-      "Can reusable components be used?",
-      "Are there scarce resources for the project?"
-    ],
-    "User Participation": [
-      "The users participate in all the phases?",
-      "Is there limited user participation?",
-      "Does the user have any experience on similar projects?",
-      "Are the users experts of the problem domain?"
-    ],
-    // Add questions for the other labels here
-  };
-
-  // Display questions and answers
-  for (const result of data.results) {
-    const category = document.createElement("h3");
-    category.textContent = result.label;
-    content.appendChild(category);
-
-    const ul = document.createElement("ul");
-    content.appendChild(ul);
-
-    if (result.answers) {
-      for (let i = 0; i < result.answers.length; i++) {
-        const li = document.createElement("li");
-        ul.appendChild(li);
-
-        // Display the question
-        const question = document.createElement("span");
-        question.textContent = questions[result.label][i] + " ";
-        li.appendChild(question);
-
-        const yes = document.createElement("button");
-        yes.textContent = "Yes";
-        li.appendChild(yes);
-
-        const no = document.createElement("button");
-        no.textContent = "No";
-        li.appendChild(no);
-
-        // Select the answer button based on the value in the data object
-        if (result.answers[i] === "Yes") {
-          yes.classList.add("selected");
-        } else if (result.answers[i] === "No") {
-          no.classList.add("selected");
-        }
-
-        // Add click event listeners to the buttons
-        yes.addEventListener("click", function () {
-          updateAnswer(result.label, i, "Yes", data);
-          // Highlight the selected button
-          yes.classList.add("selected");
-          no.classList.remove("selected");
-        });
-
-        no.addEventListener("click", function () {
-          updateAnswer(result.label, i, "No", data);
-          // Highlight the selected button
-          no.classList.add("selected");
-          yes.classList.remove("selected");
-        });
-      }
+    h1 {
+      font-size: 36px;
+      color: #2980b9;
     }
+
+    h2, h3, .results-title {
+      color: #2980b9;
+    }
+
+    button {
+      background-color: #3498db;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 10px 2px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    input[type="number"], input[type="text"] {
+      padding: 5px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #34495e;
+      background-color: #ecf0f1;
+      color: #34495e;
+    }
+
+    .feature-input {
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .feature-div {
+      display: none;
+    }
+
+    .feature-div.active {
+      display: block;
+    }
+
+    #prev-feature,
+    #next-feature {
+      cursor: pointer;
+      font-size: 24px;
+      padding: 5px 10px;
+      margin: 10px;
+    }
+
+    .form {
+      margin-bottom: 20px;
+    }
+
+    .question {
+      margin-bottom: 10px;
+    }
+
+    .question label {
+      margin-right: 10px;
+    }
+
+    /* .result {
+      margin-bottom: 10px;
+    } */
+
+    .yes-no-btn {
+    background-color: #2980b9;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 5px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
   }
 
+  .yes-no-btn:hover {
+    background-color: #3498db;
+  }
 
-  // Add a submit button to create a new version of 'data'
-  const newSubmitButton = document.createElement("button");
-    newSubmitButton.textContent = "New Submit";
-    content.appendChild(newSubmitButton);
-    newSubmitButton.onclick = function () {
-        const newData = JSON.stringify(data);
-        fetch('/second_submit', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: newData
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Handle the response data as needed
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-};
+  .yes-no-btn {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
 
+  .yes-no-btn {
+      display: none;
+    }
+
+    .yes-no-btn-label {
+      background-color: #2980b9;
+      border: none;
+      color: white;
+      padding: 5px 10px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 14px;
+      margin: 5px 2px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .yes-no-btn:checked + .yes-no-btn-label {
+      background-color: #3498db;
+    }
+
+    #feature-slider {
+  position: relative;
+}
+
+#prev-feature,
+#next-feature {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  cursor: pointer;
+  z-index: 1000;
+  opacity: 0.5;
+  transition: opacity 0.3s;
+  border: none;
+  color: white;
+  width: 50px;
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.2) 100%);
+}
+
+#prev-feature {
+  left: 0;
+}
+
+#next-feature {
+  right: 0;
+}
+
+#prev-feature:hover,
+#next-feature:hover {
+  opacity: 1;
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0.8) 100%);
+}
+
+.hidden {
+  display: none;
+}
+
+/* Add card-like container */
+.feature-div {
+  background-color: #f2f2f2;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 2px solid #ddd;
+  border-radius: 0.50rem;
 }
 
 
-    function updateAnswer(category, index, answer, data) {
-      // Update the answer in the data object
-      const result = data.results.find(result => result.label === category);
-      result.answers[index] = answer;
 
-      // Redisplay the sliders and questions
-      updateSliders(data);
+/* Responsive adjustments */
+@media screen and (max-width: 600px) {
+  .feature-div {
+    padding: 12px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .feature-div {
+    padding: 8px;
+  }
+}
+
+/* Add card-like container for labels */
+.form h3 {
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+/* Add hover effects for labels */
+/* .form h3:hover {
+  background-color: #e0e0e0;
+  cursor: pointer;
+} */
+
+/* Add padding to questions */
+.form .question {
+  padding: 8px 0;
+}
+
+.input-section {
+  background-color: #f2f2f2;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 2px solid #ddd;
+  border-radius: 0.50rem;
+}
+
+
+
+/* Responsive adjustments */
+@media screen and (max-width: 600px) {
+  .input-section {
+    padding: 12px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .input-section {
+    padding: 8px;
+  }
+}
+
+.results-container {
+  width: 100%; /* Make the results container span the full width */
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  align-items: stretch;
+}
+
+/* .results-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #f5f5f5;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 400px;
+} */
+
+.results-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.result {
+  flex: 0 0 calc(33.333% - 10px);
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  background-color: #f5f5f5;
+  padding: 15px;
+  border-radius: 5px;
+  position: relative;
+  border: 1px solid #ccc; /* Add a border */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a shadow effect */
+}
+
+.sdlc-name {
+  font-weight: bold;
+}
+
+.sdlc-percentage {
+  margin-bottom: 5px;
+}
+
+
+.result:hover {
+  cursor: default;
+}
+
+.result h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.result p {
+  font-size: 1rem;
+}
+
+/* Custom slider styling */
+.importance-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 10px;
+  border-radius: 5px;
+  background: #34495e;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.importance-slider:hover {
+  opacity: 1;
+}
+
+.importance-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #2980b9;
+  cursor: pointer;
+}
+
+.importance-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #2980b9;
+  cursor: pointer;
+}
+
+/* Styling for the importance weight label */
+.importance-slider + label {
+  display: block;
+  font-size: 1.17em;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+  color: #2980b9;
+  font-family: Arial, sans-serif;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 200px;
+  background-color: #34495e;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -100px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Add card-like container */
+.calculation-section,
+.final-output-section {
+  background-color: #ffffff;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 2px solid #ddd;
+  border-radius: 0.50rem;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 600px) {
+  .calculation-section,
+  .final-output-section {
+    padding: 12px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .calculation-section,
+  .final-output-section {
+    padding: 8px;
+  }
+}
+
+/* Customize the entire scrollbar */
+::-webkit-scrollbar {
+  width: 12px; /* Width of the scrollbar */
+  background-color: #F5F5F5; /* Background color of the scrollbar */
+}
+
+/* Customize the scrollbar thumb (the draggable part) */
+::-webkit-scrollbar-thumb {
+  background-color: #888; /* Thumb color */
+  border-radius: 10px; /* Rounded corners for the thumb */
+  border: 3px solid #F5F5F5; /* Add a border around the thumb */
+}
+
+/* Customize the scrollbar thumb when hovering */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Darken the thumb color when hovering */
+}
+
+.sdlc-dropdown {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  position: absolute; /* Add this line */
+  right: 10px; /* Add this line */
+  top: 10px; /* Add this line */
+  transform-origin: 50% 50%; /* Change this line */
+}
+
+
+.sdlc-dropdown.flip {
+  transform: rotate(180deg);
+}
+
+
+.sdlc-explanation {
+  max-height: 0px; /* Set to 0 */
+  overflow-y: auto;
+  padding-right: 5px;
+  transition: max-height 0.5s ease, opacity 0.5s ease; /* Add transition for max-height */
+  visibility: hidden;
+  opacity: 0;
+}
+
+.sdlc-explanation ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.sdlc-explanation li {
+  border-bottom: 1px solid #333; /* Adjust the color to match your text color */
+  padding: 5px 0;
+  margin: 0 20px; /* Adjust left and right margin to make the lines shorter */
+  box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.2); /* This adds a slight shadow effect below the border */
+}
+
+.sdlc-explanation li:last-child {
+  border-bottom: none; /* No border for the last item */
+  box-shadow: none; /* No shadow for the last item */
+}
+
+.show-explanation {
+  max-height: 150px; /* Set to desired height */
+  visibility: visible;
+  opacity: 1;
+}
+
+
+  </style>
+  <h1>SDLC Selection</h1>
+  <div class="input-section">
+    <label for="num-features">Number of Features: </label>
+    <input type="number" id="num-features" min="1" value="1">
+    <br>
+    <button id="generate-feature-inputs">Generate Feature Inputs</button>
+</div>
+<div id="welcome-container">
+  <h1>Welcome to the SDLC Recommendation System</h1>
+  <h2>The Purpose</h2>
+  <p>Welcome to the SDLC Recommendation System. This unique tool is designed to help project managers make informed decisions about their Software Development Life Cycle (SDLC) models based on their system's specific features.</p>
+  
+  <h2>How It Works</h2>
+  <ul>
+    <li>Begin by inputting the number of features your system has above.</li>
+    <li>For each feature, you will also need to assign a weight that represents its importance within your system.</li>
+    <li>The system will then recommend the most suitable SDLC model for each of these features. These recommendations are based on well-defined research criteria.</li>
+    <li>Each criterion has a set of questions that will be answered using a language model.</li>
+    <li>The model analyzes your text input to generate responses.</li>
+  </ul>
+  
+  <h2>Important Note</h2>
+  <p>Please note, this model, due to time constraints, has not been trained, so while it aims to provide the best answer, there may be room for improvement.</p>
+  
+  <h2>Your Input Matters</h2>
+  <p>This was desinged as a tool to assist you, not to dictate your decisions, you have the power to change the answer for any question if you believe it's not accurate.</p>
+  
+  <h2>Final Outputs</h2>
+  <p>Once a feature has been inputted, the system will present the recommended SDLCs in order of the highest to the lowest match. Each SDLC comes with an optional drop-down menu that explains why it matches your input.</p>
+  
+  <h2>Final Classification</h2>
+  <p>As a final step, you can opt for a final classification. This will calculate a weighted average of all the features and output the SDLCs in order of the highest to the lowest overall match. This tool aims to provide you with comprehensive insights, helping you make the most informed decisions about your project's SDLC.</p>
+</div>
+
+  <div style="position: relative;">
+    <div id="feature-slider">
+      <button id="prev-feature" type="button" onclick="switchFeature(-1)">&lt;</button>
+      <div id="feature-inputs-container"></div>
+      <button id="next-feature" type="button" onclick="switchFeature(1)">&gt;</button>
+    </div>
+  </div>
+  <div id="results-container"></div>
+  <div id="final-output-container"></div>
+  <script>
+    const labels = ['Development Team', 'Requirements', 'Risk', 'User Participation'];
+    const questions = {
+      "Development Team": [
+        "The team has experience on similar projects?",
+        "Is the team knowledgeable about the domain of the project?",
+        "The team has experience with the tools used for the project?",
+        "There is training available for the team?"
+      ],
+      "Requirements": [
+        "Easy to understandable and defined requirements?",
+        "Requirements are changed quite often?",
+        "Requirements are defined early in the cycle?",
+        "Is the system complex due to the requirements?"
+      ],
+      "Risk": [
+        "The project is the improvement of an old system?",
+        "The requirements are highly reliable?",
+        "Is there stable funding for the project?",
+        "Is the schedule of the project tight?",
+        "Can reusable components be used?",
+        "Are there scarce resources for the project?"
+      ],
+      "User Participation": [
+        "The users participate in all the phases?",
+        "Is there limited user participation?",
+        "Does the user have any experience on similar projects?",
+        "Are the users experts of the problem domain?"
+      ],
+    };
+
+    const featureWeights = {};
+
+
+    function fetchDataForFeature(featureIndex) {
+      const text = document.getElementById(`feature-text-${featureIndex}`).value;
+      const formData = new FormData();
+      formData.append("text", text);
+
+      fetch("/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams(formData),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Data received from the server in first submit:", data);
+          //added code 
+          const featureDiv = document.querySelector(`#feature-inputs-container .feature-div:nth-child(${featureIndex + 1})`);
+          updateForms(data, featureIndex, text, featureDiv.querySelector(".forms-container")); // Pass the featureText here
+        })
+        .catch((error) => console.error('Error:', error));
     }
 
-    document.getElementById('classification-form').addEventListener('submit', async (event) => {
-      event.preventDefault();
-      const data = await fetchData();
-      updateSliders(data);
+
+    // second submit
+    function submitFeatureData(featureIndex) {
+      const featureDiv = document.querySelector(`#feature-inputs-container .feature-div:nth-child(${featureIndex + 1})`);
+      const forms = featureDiv.querySelectorAll(".form");
+    
+      const data = {
+        results: Array.from(forms).map((form) => {
+          const label = form.querySelector("h3").textContent;
+          const questions = form.querySelectorAll(".question");
+
+          return {
+            label,
+            answers: Array.from(questions).map((question) => {
+              const yesInput = question.querySelector('input[value="yes"]');
+              const noInput = question.querySelector('input[value="no"]');
+
+              return yesInput.checked ? "yes" : noInput.checked ? "no" : null;
+            }),
+          };
+        }),
+      };
+
+      console.log(data);
+
+      fetch("/second_submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        // .then((response) => response.json())
+        .then(async (response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            const errorText = await response.text();
+            console.error("Error response text:", errorText);
+            throw new Error("Server error");
+          }
+        })
+
+        .then((data) => {
+          console.log("Data received from the server in second submit:", data);
+          // Do something with the received data, e.g., display the best SDLC
+          displaySDLCResults(data, featureIndex);
+          // if (featureIndex === totalNumberOfFeatures - 1) {
+          // displayFinalSDLCOutput();
+          // }
+        })
+        .catch((error) => console.error('Error:', error));  // Catch any errors
+        const weightInput = document.querySelector(`#feature-inputs-container .feature-div:nth-child(${featureIndex + 1}) .importance-slider`);
+        featureWeights[featureIndex] = Number(weightInput.value);
+        if (document.getElementById("finish-btn")) document.getElementById("finish-btn").remove();
+        console.log(featureWeights);
+
+        
+    }
+
+
+// was working, keep in case of go back
+    function generateFeatureInputs() {
+      const numFeatures = parseInt(document.getElementById("num-features").value);
+      const featureInputsContainer = document.getElementById("feature-inputs-container");
+      featureInputsContainer.innerHTML = "";
+      
+      for (let i = 0; i < numFeatures; i++) {
+        const featureDiv = document.createElement("div");
+        featureDiv.className = "feature-div";
+
+        if (i !== 0) {
+        featureDiv.classList.add("hidden");
+      }
+
+      featureDiv.classList.add("feature-div");
+      if (i === 0) {
+        featureDiv.classList.add("active");
+      }
+
+        const label = document.createElement("label");
+        label.textContent = `Feature ${i + 1}: `;
+        featureDiv.appendChild(label);
+
+        const input = document.createElement("input");
+        input.type = "text";
+        input.className = "feature-input";
+        input.id = `feature-text-${i}`;
+        featureDiv.appendChild(input);
+
+        const updateButton = document.createElement("button");
+        updateButton.textContent = "Update Forms";
+        updateButton.addEventListener("click", function () {
+          fetchDataForFeature(i);
+        });
+        featureDiv.appendChild(updateButton);
+
+        //added code recently
+        const featureContent = document.createElement("div");
+        featureContent.className = "feature-content";
+        featureDiv.appendChild(featureContent);
+
+        const formsContainer = document.createElement("div");
+        formsContainer.className = "forms-container";
+        featureDiv.appendChild(formsContainer);
+
+        featureInputsContainer.appendChild(featureDiv);
+      }
+
+      setArrowVisibility(numFeatures > 1);
+
+    }
+
+
+    function setArrowVisibility(visible) {
+      const prevFeatureButton = document.getElementById("prev-feature");
+      const nextFeatureButton = document.getElementById("next-feature");
+
+      if (visible) {
+        const activeFeature = document.querySelector(".feature-div.active");
+        if (!activeFeature) return;
+
+        const featureDivs = document.querySelectorAll(".feature-div");
+        const activeIndex = Array.prototype.indexOf.call(featureDivs, activeFeature);
+
+        // Hide the left button if the current feature is the first one
+        if (activeIndex === 0) {
+          prevFeatureButton.style.display = "none";
+        } else {
+          prevFeatureButton.style.display = "block";
+        }
+
+        // Hide the right button if the current feature is the last one
+        if (activeIndex === featureDivs.length - 1) {
+          nextFeatureButton.style.display = "none";
+        } else {
+          nextFeatureButton.style.display = "block";
+        }
+      } else {
+        prevFeatureButton.style.display = "none";
+        nextFeatureButton.style.display = "none";
+      }
+    }
+
+
+
+
+    //update forms
+    function updateForms(data, featureIndex, featureText, formsContainer) {
+      const featureDiv = document.querySelector(`#feature-inputs-container .feature-div:nth-child(${featureIndex + 1})`);
+      // const formsContainer = featureDiv.querySelector(".forms-container");
+      formsContainer.innerHTML = "";
+
+      const featureHeader = document.createElement("h2");
+      featureHeader.textContent = `Feature: ${featureText}`;
+      formsContainer.appendChild(featureHeader);
+
+      const weightLabel = document.createElement("label");
+      weightLabel.className = "tooltip";
+      weightLabel.textContent = "Weight: ";
+      formsContainer.appendChild(weightLabel);
+
+      // Create and append the tooltipText element
+      const tooltipText = document.createElement("span");
+      tooltipText.className = "tooltiptext";
+      tooltipText.textContent = "Set the importance of this feature (1-10)";
+      weightLabel.appendChild(tooltipText);
+
+      const weightInput = document.createElement("input");
+      weightInput.type = "range";
+      weightInput.min = "1";
+      weightInput.max = "10";
+      weightInput.value = "5"; // Default value
+      weightInput.className = "importance-slider";
+      formsContainer.appendChild(weightInput);
+
+      const weightValue = document.createElement("span");
+      weightValue.textContent = weightInput.value;
+      weightLabel.appendChild(weightValue); // Append weightValue to weightLabel
+
+      weightInput.addEventListener("input", function () {
+        weightValue.textContent = weightInput.value;
+      });
+
+      for (const section of data.results) {
+        const label = section.label;
+        const form = document.createElement("form");
+        form.className = "form";
+
+        const header = document.createElement("h3");
+        header.textContent = label;
+        form.appendChild(header);
+
+
+        //added code here for container and hover effects for labels
+        header.classList.add("label-container");
+        header.addEventListener("mouseenter", function () {
+          header.classList.add("label-hover");
+        });
+        header.addEventListener("mouseleave", function () {
+          header.classList.remove("label-hover");
+        });
+
+
+        const answers = questions[label];
+        for (let i = 0; i < answers.length; i++) {
+          const answer = answers[i];
+          const questionDiv = document.createElement("div");
+          questionDiv.className = "question";
+
+          const labelElement = document.createElement("label");
+          labelElement.textContent = answer;
+          questionDiv.appendChild(labelElement);
+
+          const yesInput = document.createElement("input");
+          yesInput.type = "radio";
+          yesInput.name = `feature-${featureIndex}-question-${i}`; // Include featureIndex and i as a prefix
+          yesInput.id = `yes-feature-${featureIndex}-${answer}-${i}`; // Add featureIndex to the id attribute
+          yesInput.value = "yes";
+          yesInput.className = "yes-no-btn";
+          if (section.answers[i] === "Yes") {
+            yesInput.checked = true;
+          }
+          questionDiv.appendChild(yesInput);
+
+          const yesLabel = document.createElement("label");
+          yesLabel.textContent = "Yes";
+          yesLabel.className = "yes-no-btn-label";
+          yesLabel.htmlFor = yesInput.id;
+          questionDiv.appendChild(yesLabel);
+
+          const noInput = document.createElement("input");
+          noInput.type = "radio";
+          noInput.name = `feature-${featureIndex}-question-${i}`; // Include featureIndex and i as a prefix
+          noInput.id = `no-feature-${featureIndex}-${answer}-${i}`; // Add featureIndex to the id attribute
+          noInput.value = "no";
+          noInput.className = "yes-no-btn";
+          if (section.answers[i] === "No") {
+            noInput.checked = true;
+          }
+          questionDiv.appendChild(noInput);
+
+          const noLabel = document.createElement("label");
+          noLabel.textContent = "No";
+          noLabel.className = "yes-no-btn-label";
+          noLabel.htmlFor = noInput.id;
+          questionDiv.appendChild(noLabel);
+
+
+          form.appendChild(questionDiv);
+        }
+
+        formsContainer.appendChild(form);
+      }
+
+      // Add a submit button for the entire feature (outside the loop)
+      const submitButton = document.createElement("button");
+      submitButton.textContent = "Submit";
+      submitButton.className = "submit-feature";
+      formsContainer.appendChild(submitButton);
+
+      // Add event listener for the submit button
+      submitButton.addEventListener("click", function (event) {
+        event.preventDefault(); // Prevent the default form submission behavior
+        submitFeatureData(featureIndex);
+      });
+    }
+    
+
+    function switchFeature(direction) {
+      const featureDivs = document.querySelectorAll(".feature-div");
+      const activeFeature = document.querySelector(".feature-div.active");
+      if (!activeFeature) return;
+      const activeIndex = Array.prototype.indexOf.call(featureDivs, activeFeature);
+
+      let newIndex = activeIndex + direction;
+
+      // Ensure the new index is within bounds
+      if (newIndex < 0) {
+        newIndex = 0;
+      } else if (newIndex >= featureDivs.length) {
+        newIndex = featureDivs.length - 1;
+      }
+
+      // Hide the current active feature and show the new one
+      activeFeature.classList.remove("active");
+      featureDivs[newIndex].classList.add("active");
+
+      setArrowVisibility(featureDivs.length > 1);
+    }
+
+
+    function displaySDLCResults(sorted_SDLCsObj, featureIndex) {
+      const sorted_SDLCs = sorted_SDLCsObj.sorted_SDLCs;
+      console.log(sorted_SDLCs);
+
+      const allFeaturesSubmitted = Array.from(document.querySelectorAll(".feature-div:not(.active)")).every(featureDiv => featureDiv.querySelector(".results-container"));
+
+      // Get the respective feature container
+      const featureDiv = document.querySelector(`#feature-inputs-container .feature-div:nth-child(${featureIndex + 1})`);
+
+      // Find or create the results container for the feature
+      let resultsContainer = featureDiv.querySelector(".results-container");
+      if (!resultsContainer) {
+        resultsContainer = document.createElement("div");
+        resultsContainer.className = "results-container";
+        featureDiv.appendChild(resultsContainer);
+      } else {
+        resultsContainer.innerHTML = ""; // Clear existing results
+      }
+
+      // Create a title for the results
+      const resultsTitle = document.createElement("h2");
+      resultsTitle.textContent = `Results for feature ${featureIndex + 1}:`; // Add feature number to the title
+      resultsTitle.className = "results-title"; // Add a class for styling
+      resultsContainer.appendChild(resultsTitle);
+
+      // Create a container for the results
+      const resultsWrapper = document.createElement("div");
+      resultsWrapper.className = "results-wrapper";
+      resultsContainer.appendChild(resultsWrapper);
+
+      for (const {sdlc, percentage, explanation} of sorted_SDLCs) {
+        const resultDiv = document.createElement("div");
+        resultDiv.className = "result";
+        resultsWrapper.appendChild(resultDiv);
+
+        const sdlcName = document.createElement("div");
+        sdlcName.className = "sdlc-name";
+        sdlcName.innerText = sdlc;
+        resultDiv.appendChild(sdlcName);
+
+        const sdlcPercentage = document.createElement("div");
+        sdlcPercentage.className = "sdlc-percentage";
+        sdlcPercentage.innerText = `${percentage}%`;
+        resultDiv.appendChild(sdlcPercentage);
+
+        const sdlcDropdown = document.createElement("div");
+        sdlcDropdown.className = "sdlc-dropdown";
+        sdlcDropdown.innerHTML = "&#x25BC;"; // Unicode down arrow
+        sdlcDropdown.addEventListener("click", () => {
+        const explanationPoints = explanation.split(". ");
+        let explanationHTML = "<ul>";
+        for (const point of explanationPoints) {
+          if (point.length > 1) {
+            explanationHTML += `<li>${point}</li>`;
+          }
+        }
+        explanationHTML += "</ul>";
+        sdlcExplanation.innerHTML = explanationHTML;
+        sdlcExplanation.classList.toggle("show-explanation");
+
+        // Add this part to your event listener
+        if (sdlcExplanation.classList.contains("show-explanation")) {
+          sdlcDropdown.style.transform = "rotate(180deg)";
+        } else {
+          sdlcDropdown.style.transform = "rotate(0deg)";
+        }
+      });
+        resultDiv.appendChild(sdlcDropdown);
+
+        const sdlcExplanation = document.createElement("div");
+        sdlcExplanation.className = "sdlc-explanation";
+        resultDiv.appendChild(sdlcExplanation);
+      }
+
+      // Add the Finish button conditionally
+      if (allFeaturesSubmitted && !document.getElementById("finish-btn")) {
+        const finishButton = document.createElement("button");
+        finishButton.textContent = "Finish";
+        finishButton.id = "finish-btn";
+        finishButton.style.float = "right";
+        finishButton.addEventListener("click", function () {
+          displayFinalSDLCOutput();
+        });
+
+        const lastFeatureResultsContainer = document.querySelector(".feature-div:last-child .results-container");
+        lastFeatureResultsContainer.appendChild(document.createElement("br")); // Add a line break for better spacing
+        lastFeatureResultsContainer.appendChild(finishButton);
+      }
+}
+
+function displayFinalSDLCOutput() {
+  const featureDivs = document.querySelectorAll(".feature-div");
+  const sdlcSums = {};
+
+  featureDivs.forEach((featureDiv, index) => {
+    const weight = featureWeights[index];
+    const resultsWrapper = featureDiv.querySelector(".results-wrapper");
+
+    if (resultsWrapper) {
+      const sdlcResults = resultsWrapper.querySelectorAll(".result");
+
+      sdlcResults.forEach((result) => {
+        const sdlcName = result.querySelector(".sdlc-name").textContent;
+        const percentage = parseFloat(result.querySelector(".sdlc-percentage").textContent);
+
+        if (!sdlcSums[sdlcName]) {
+          sdlcSums[sdlcName] = 0;
+        }
+
+        sdlcSums[sdlcName] += percentage * weight;
+      });
+    }
+  });
+
+  const totalWeight = Object.values(featureWeights).reduce((a, b) => a + b, 0);
+  const weightedAverages = Object.entries(sdlcSums).map(([sdlcName, sum]) => [sdlcName, sum / totalWeight]);
+  const sortedWeightedAverages = weightedAverages.sort((a, b) => b[1] - a[1]);
+
+  // Display the final output
+  const finalOutputContainer = document.getElementById("final-output-container");
+  finalOutputContainer.innerHTML = ""; // Clear existing content
+
+  const finalOutputSection = document.createElement("div");
+  finalOutputSection.className = "final-output-section";
+  finalOutputContainer.appendChild(finalOutputSection);
+
+  const finalOutputTitle = document.createElement("h2");
+  finalOutputTitle.textContent = "Final SDLC Output:";
+  finalOutputSection.appendChild(finalOutputTitle);
+
+  const finalOutputWrapper = document.createElement("div");
+  finalOutputWrapper.className = "final-output-wrapper";
+  finalOutputSection.appendChild(finalOutputWrapper);
+
+  for (const [sdlc, weightedAvg] of sortedWeightedAverages) {
+    const resultDiv = document.createElement("div");
+    resultDiv.className = "result";
+    finalOutputWrapper.appendChild(resultDiv);
+
+    const sdlcName = document.createElement("div");
+    sdlcName.className = "sdlc-name";
+    sdlcName.innerText = sdlc;
+    resultDiv.appendChild(sdlcName);
+
+    const sdlcWeightedAvg = document.createElement("div");
+    sdlcWeightedAvg.className = "sdlc-percentage";
+    sdlcWeightedAvg.innerText = `${weightedAvg.toFixed(2)}%`;
+    resultDiv.appendChild(sdlcWeightedAvg);
+  }
+}
+
+function clearFinalOutput() {
+  const finalOutputContainer = document.getElementById("final-output-container");
+  if (finalOutputContainer) {
+    finalOutputContainer.innerHTML = "";
+  }
+}
+
+function clearWelcomeMessage() {
+  const welcomeMessage = document.getElementById("welcome-container");
+  if (welcomeMessage) {
+    welcomeMessage.innerHTML = "";
+  }
+}
+
+
+document.getElementById('generate-feature-inputs').addEventListener('click', function () {
+  clearFinalOutput();
+  clearWelcomeMessage();
+  generateFeatureInputs();
+});
+
+
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+      setArrowVisibility(false);
     });
+
   </script>
 </body>
 </html>
