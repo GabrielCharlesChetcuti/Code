@@ -5,7 +5,6 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SDLC Selection Tool</title>
-  <!-- <link rel="stylesheet" type="text/css" href="css/style.css"> -->
 </head>
 <body>
   <style>
@@ -88,8 +87,6 @@
       margin-right: 10px;
     }
 
-  
-
     .yes-no-btn {
     background-color: #2980b9;
     border: none;
@@ -116,30 +113,30 @@
 
   .yes-no-btn {
       display: none;
-    }
+  }
 
-    .yes-no-btn-label {
-      background-color: #2980b9;
-      border: none;
-      color: white;
-      padding: 5px 10px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 14px;
-      margin: 5px 2px;
-      cursor: pointer;
-      border-radius: 5px;
-      transition: background-color 0.3s;
-    }
+  .yes-no-btn-label {
+    background-color: #2980b9;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 5px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
 
-    .yes-no-btn:checked + .yes-no-btn-label {
-      background-color: #3498db;
-    }
+  .yes-no-btn:checked + .yes-no-btn-label {
+    background-color: #3498db;
+  }
 
     #feature-slider {
   position: relative;
-}
+ }
 
 #prev-feature,
 #next-feature {
@@ -178,7 +175,6 @@
   display: none;
 }
 
-/* Add card-like container */
 .feature-div {
   background-color: #f2f2f2;
   margin-bottom: 1rem;
@@ -187,9 +183,6 @@
   border-radius: 0.50rem;
 }
 
-
-
-/* Responsive adjustments */
 @media screen and (max-width: 600px) {
   .feature-div {
     padding: 12px;
@@ -202,7 +195,6 @@
   }
 }
 
-/* Add card-like container for labels */
 .form h3 {
   background-color: #f5f5f5;
   border-radius: 8px;
@@ -211,13 +203,6 @@
   margin-bottom: 12px;
 }
 
-/* Add hover effects for labels */
-/* .form h3:hover {
-  background-color: #e0e0e0;
-  cursor: pointer;
-} */
-
-/* Add padding to questions */
 .form .question {
   padding: 8px 0;
 }
@@ -230,9 +215,6 @@
   border-radius: 0.50rem;
 }
 
-
-
-/* Responsive adjustments */
 @media screen and (max-width: 600px) {
   .input-section {
     padding: 12px;
@@ -246,23 +228,11 @@
 }
 
 .results-container {
-  width: 100%; /* Make the results container span the full width */
+  width: 100%; 
   display: flex;
-  flex-direction: column; /* Stack children vertically */
+  flex-direction: column; 
   align-items: stretch;
 }
-
-/* .results-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  background-color: #f5f5f5;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  width: 100%;
-  max-width: 400px;
-} */
 
 .results-wrapper {
   display: flex;
@@ -278,8 +248,8 @@
   padding: 15px;
   border-radius: 5px;
   position: relative;
-  border: 1px solid #ccc; /* Add a border */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a shadow effect */
+  border: 1px solid #ccc; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .sdlc-name {
@@ -304,7 +274,6 @@
   font-size: 1rem;
 }
 
-/* Custom slider styling */
 .importance-slider {
   -webkit-appearance: none;
   appearance: none;
@@ -340,7 +309,6 @@
   cursor: pointer;
 }
 
-/* Styling for the importance weight label */
 .importance-slider + label {
   display: block;
   font-size: 1.17em;
@@ -380,7 +348,6 @@
   opacity: 1;
 }
 
-/* Add card-like container */
 .calculation-section,
 .final-output-section {
   background-color: #ffffff;
@@ -390,7 +357,6 @@
   border-radius: 0.50rem;
 }
 
-/* Responsive adjustments */
 @media screen and (max-width: 600px) {
   .calculation-section,
   .final-output-section {
@@ -405,44 +371,39 @@
   }
 }
 
-/* Customize the entire scrollbar */
 ::-webkit-scrollbar {
-  width: 12px; /* Width of the scrollbar */
-  background-color: #F5F5F5; /* Background color of the scrollbar */
+  width: 12px; 
+  background-color: #F5F5F5;
 }
 
-/* Customize the scrollbar thumb (the draggable part) */
 ::-webkit-scrollbar-thumb {
-  background-color: #888; /* Thumb color */
-  border-radius: 10px; /* Rounded corners for the thumb */
-  border: 3px solid #F5F5F5; /* Add a border around the thumb */
+  background-color: #888; 
+  border-radius: 10px; 
+  border: 3px solid #F5F5F5; 
 }
 
-/* Customize the scrollbar thumb when hovering */
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #555; /* Darken the thumb color when hovering */
+  background-color: #555; 
 }
 
 .sdlc-dropdown {
   cursor: pointer;
   transition: transform 0.3s ease;
-  position: absolute; /* Add this line */
-  right: 10px; /* Add this line */
-  top: 10px; /* Add this line */
-  transform-origin: 50% 50%; /* Change this line */
+  position: absolute; 
+  right: 10px; 
+  top: 10px; 
+  transform-origin: 50% 50%;
 }
-
 
 .sdlc-dropdown.flip {
   transform: rotate(180deg);
 }
 
-
 .sdlc-explanation {
-  max-height: 0px; /* Set to 0 */
+  max-height: 0px; 
   overflow-y: auto;
   padding-right: 5px;
-  transition: max-height 0.5s ease, opacity 0.5s ease; /* Add transition for max-height */
+  transition: max-height 0.5s ease, opacity 0.5s ease;
   visibility: hidden;
   opacity: 0;
 }
@@ -453,24 +414,22 @@
 }
 
 .sdlc-explanation li {
-  border-bottom: 1px solid #333; /* Adjust the color to match your text color */
+  border-bottom: 1px solid #333; 
   padding: 5px 0;
-  margin: 0 20px; /* Adjust left and right margin to make the lines shorter */
-  box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.2); /* This adds a slight shadow effect below the border */
+  margin: 0 20px; 
+  box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.2);
 }
 
 .sdlc-explanation li:last-child {
-  border-bottom: none; /* No border for the last item */
-  box-shadow: none; /* No shadow for the last item */
+  border-bottom: none; 
+  box-shadow: none;
 }
 
 .show-explanation {
-  max-height: 150px; /* Set to desired height */
+  max-height: 150px; 
   visibility: visible;
   opacity: 1;
 }
-
-
   </style>
   <h1>SDLC Selection</h1>
   <div class="input-section">
@@ -564,15 +523,12 @@
         .then((response) => response.json())
         .then((data) => {
           console.log("Data received from the server in first submit:", data);
-          //added code 
           const featureDiv = document.querySelector(`#feature-inputs-container .feature-div:nth-child(${featureIndex + 1})`);
-          updateForms(data, featureIndex, text, featureDiv.querySelector(".forms-container")); // Pass the featureText here
+          updateForms(data, featureIndex, text, featureDiv.querySelector(".forms-container"));
         })
         .catch((error) => console.error('Error:', error));
     }
 
-
-    // second submit
     function submitFeatureData(featureIndex) {
       const featureDiv = document.querySelector(`#feature-inputs-container .feature-div:nth-child(${featureIndex + 1})`);
       const forms = featureDiv.querySelectorAll(".form");
@@ -603,7 +559,6 @@
         },
         body: JSON.stringify(data),
       })
-        // .then((response) => response.json())
         .then(async (response) => {
           if (response.ok) {
             return response.json();
@@ -616,23 +571,15 @@
 
         .then((data) => {
           console.log("Data received from the server in second submit:", data);
-          // Do something with the received data, e.g., display the best SDLC
           displaySDLCResults(data, featureIndex);
-          // if (featureIndex === totalNumberOfFeatures - 1) {
-          // displayFinalSDLCOutput();
-          // }
         })
-        .catch((error) => console.error('Error:', error));  // Catch any errors
+        .catch((error) => console.error('Error:', error));
         const weightInput = document.querySelector(`#feature-inputs-container .feature-div:nth-child(${featureIndex + 1}) .importance-slider`);
         featureWeights[featureIndex] = Number(weightInput.value);
         if (document.getElementById("finish-btn")) document.getElementById("finish-btn").remove();
         console.log(featureWeights);
-
-        
     }
 
-
-// was working, keep in case of go back
     function generateFeatureInputs() {
       const numFeatures = parseInt(document.getElementById("num-features").value);
       const featureInputsContainer = document.getElementById("feature-inputs-container");
@@ -668,7 +615,6 @@
         });
         featureDiv.appendChild(updateButton);
 
-        //added code recently
         const featureContent = document.createElement("div");
         featureContent.className = "feature-content";
         featureDiv.appendChild(featureContent);
@@ -696,14 +642,12 @@
         const featureDivs = document.querySelectorAll(".feature-div");
         const activeIndex = Array.prototype.indexOf.call(featureDivs, activeFeature);
 
-        // Hide the left button if the current feature is the first one
         if (activeIndex === 0) {
           prevFeatureButton.style.display = "none";
         } else {
           prevFeatureButton.style.display = "block";
         }
 
-        // Hide the right button if the current feature is the last one
         if (activeIndex === featureDivs.length - 1) {
           nextFeatureButton.style.display = "none";
         } else {
@@ -715,13 +659,8 @@
       }
     }
 
-
-
-
-    //update forms
     function updateForms(data, featureIndex, featureText, formsContainer) {
       const featureDiv = document.querySelector(`#feature-inputs-container .feature-div:nth-child(${featureIndex + 1})`);
-      // const formsContainer = featureDiv.querySelector(".forms-container");
       formsContainer.innerHTML = "";
 
       const featureHeader = document.createElement("h2");
@@ -733,7 +672,6 @@
       weightLabel.textContent = "Weight: ";
       formsContainer.appendChild(weightLabel);
 
-      // Create and append the tooltipText element
       const tooltipText = document.createElement("span");
       tooltipText.className = "tooltiptext";
       tooltipText.textContent = "Set the importance of this feature (1-10)";
@@ -743,13 +681,13 @@
       weightInput.type = "range";
       weightInput.min = "1";
       weightInput.max = "10";
-      weightInput.value = "5"; // Default value
+      weightInput.value = "5"; 
       weightInput.className = "importance-slider";
       formsContainer.appendChild(weightInput);
 
       const weightValue = document.createElement("span");
       weightValue.textContent = weightInput.value;
-      weightLabel.appendChild(weightValue); // Append weightValue to weightLabel
+      weightLabel.appendChild(weightValue); 
 
       weightInput.addEventListener("input", function () {
         weightValue.textContent = weightInput.value;
@@ -764,8 +702,6 @@
         header.textContent = label;
         form.appendChild(header);
 
-
-        //added code here for container and hover effects for labels
         header.classList.add("label-container");
         header.addEventListener("mouseenter", function () {
           header.classList.add("label-hover");
@@ -787,8 +723,8 @@
 
           const yesInput = document.createElement("input");
           yesInput.type = "radio";
-          yesInput.name = `feature-${featureIndex}-question-${i}`; // Include featureIndex and i as a prefix
-          yesInput.id = `yes-feature-${featureIndex}-${answer}-${i}`; // Add featureIndex to the id attribute
+          yesInput.name = `feature-${featureIndex}-question-${i}`;
+          yesInput.id = `yes-feature-${featureIndex}-${answer}-${i}`; 
           yesInput.value = "yes";
           yesInput.className = "yes-no-btn";
           if (section.answers[i] === "Yes") {
@@ -804,8 +740,8 @@
 
           const noInput = document.createElement("input");
           noInput.type = "radio";
-          noInput.name = `feature-${featureIndex}-question-${i}`; // Include featureIndex and i as a prefix
-          noInput.id = `no-feature-${featureIndex}-${answer}-${i}`; // Add featureIndex to the id attribute
+          noInput.name = `feature-${featureIndex}-question-${i}`;
+          noInput.id = `no-feature-${featureIndex}-${answer}-${i}`; 
           noInput.value = "no";
           noInput.className = "yes-no-btn";
           if (section.answers[i] === "No") {
@@ -826,15 +762,13 @@
         formsContainer.appendChild(form);
       }
 
-      // Add a submit button for the entire feature (outside the loop)
       const submitButton = document.createElement("button");
       submitButton.textContent = "Submit";
       submitButton.className = "submit-feature";
       formsContainer.appendChild(submitButton);
 
-      // Add event listener for the submit button
       submitButton.addEventListener("click", function (event) {
-        event.preventDefault(); // Prevent the default form submission behavior
+        event.preventDefault(); 
         submitFeatureData(featureIndex);
       });
     }
@@ -848,14 +782,12 @@
 
       let newIndex = activeIndex + direction;
 
-      // Ensure the new index is within bounds
       if (newIndex < 0) {
         newIndex = 0;
       } else if (newIndex >= featureDivs.length) {
         newIndex = featureDivs.length - 1;
       }
 
-      // Hide the current active feature and show the new one
       activeFeature.classList.remove("active");
       featureDivs[newIndex].classList.add("active");
 
@@ -869,26 +801,22 @@
 
       const allFeaturesSubmitted = Array.from(document.querySelectorAll(".feature-div:not(.active)")).every(featureDiv => featureDiv.querySelector(".results-container"));
 
-      // Get the respective feature container
       const featureDiv = document.querySelector(`#feature-inputs-container .feature-div:nth-child(${featureIndex + 1})`);
 
-      // Find or create the results container for the feature
       let resultsContainer = featureDiv.querySelector(".results-container");
       if (!resultsContainer) {
         resultsContainer = document.createElement("div");
         resultsContainer.className = "results-container";
         featureDiv.appendChild(resultsContainer);
       } else {
-        resultsContainer.innerHTML = ""; // Clear existing results
+        resultsContainer.innerHTML = ""; 
       }
 
-      // Create a title for the results
       const resultsTitle = document.createElement("h2");
-      resultsTitle.textContent = `Results for feature ${featureIndex + 1}:`; // Add feature number to the title
-      resultsTitle.className = "results-title"; // Add a class for styling
+      resultsTitle.textContent = `Results for feature ${featureIndex + 1}:`; 
+      resultsTitle.className = "results-title"; 
       resultsContainer.appendChild(resultsTitle);
 
-      // Create a container for the results
       const resultsWrapper = document.createElement("div");
       resultsWrapper.className = "results-wrapper";
       resultsContainer.appendChild(resultsWrapper);
@@ -910,7 +838,7 @@
 
         const sdlcDropdown = document.createElement("div");
         sdlcDropdown.className = "sdlc-dropdown";
-        sdlcDropdown.innerHTML = "&#x25BC;"; // Unicode down arrow
+        sdlcDropdown.innerHTML = "&#x25BC;"; 
         sdlcDropdown.addEventListener("click", () => {
         const explanationPoints = explanation.split(". ");
         let explanationHTML = "<ul>";
@@ -923,7 +851,6 @@
         sdlcExplanation.innerHTML = explanationHTML;
         sdlcExplanation.classList.toggle("show-explanation");
 
-        // Add this part to your event listener
         if (sdlcExplanation.classList.contains("show-explanation")) {
           sdlcDropdown.style.transform = "rotate(180deg)";
         } else {
@@ -937,7 +864,6 @@
         resultDiv.appendChild(sdlcExplanation);
       }
 
-      // Add the Finish button conditionally
       if (allFeaturesSubmitted && !document.getElementById("finish-btn")) {
         const finishButton = document.createElement("button");
         finishButton.textContent = "Finish";
@@ -948,7 +874,7 @@
         });
 
         const lastFeatureResultsContainer = document.querySelector(".feature-div:last-child .results-container");
-        lastFeatureResultsContainer.appendChild(document.createElement("br")); // Add a line break for better spacing
+        lastFeatureResultsContainer.appendChild(document.createElement("br")); 
         lastFeatureResultsContainer.appendChild(finishButton);
       }
 }
@@ -981,9 +907,8 @@ function displayFinalSDLCOutput() {
   const weightedAverages = Object.entries(sdlcSums).map(([sdlcName, sum]) => [sdlcName, sum / totalWeight]);
   const sortedWeightedAverages = weightedAverages.sort((a, b) => b[1] - a[1]);
 
-  // Display the final output
   const finalOutputContainer = document.getElementById("final-output-container");
-  finalOutputContainer.innerHTML = ""; // Clear existing content
+  finalOutputContainer.innerHTML = ""; 
 
   const finalOutputSection = document.createElement("div");
   finalOutputSection.className = "final-output-section";
@@ -1028,15 +953,11 @@ function clearWelcomeMessage() {
   }
 }
 
-
 document.getElementById('generate-feature-inputs').addEventListener('click', function () {
   clearFinalOutput();
   clearWelcomeMessage();
   generateFeatureInputs();
 });
-
-
-
 
     document.addEventListener("DOMContentLoaded", function () {
       setArrowVisibility(false);

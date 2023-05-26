@@ -17,7 +17,7 @@ increments = 5
 print(model.classifier.out_features)
 
 
-# Define the questions for each label Knowledge in Domain is Little
+# Define the questions for each label 
 questions = {
     "Risk": ["The project is the improvement of an old system?", "The requirements are highly reliable?", "Is there stable funding for the project?", "Is the schedule of the project tight?", "Can reusable components be used?", "Are there scare resources for the project?"],
     "Development Team": ["The team has experience on similar projects?", "Is the team knowledgeable about the domain of the project?", "The team has experience with the tools used for the project?", "There is training available for the team?"],
@@ -48,12 +48,10 @@ def index():
 @app.route('/submit', methods=['POST'])
 def submit():
     text = request.form['text']
-    # predictions = generate_predictions(text, labels, increments)
     results = []
     for label in labels:
         answers = generate_answers(text, label)
         results.append({'label': label, 'answers': answers})
-    # print(predictions)
     print(results)
     return jsonify({'results': results})
 
@@ -543,16 +541,9 @@ def second_submit():
             },
         }
         
-    # initialize list to hold user responses
         user_responses = []
-
-        # get user responses from data
         for label in data['results']:
-            
-            # loop through each answer for the current label
             for answer in label['answers']:
-                
-                # append the answer (converted to lowercase) to the user_responses list
                 user_responses.append(answer.lower())
 
         print("User Responses:")
